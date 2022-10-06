@@ -36,15 +36,32 @@ def inorder(root):
         inorder(root.right)
 
 
-def main():
-    root_value = 5
-    vals = [5, 3, 17, 12, 9, 10]
-
-    root = Node(root_value)
+# Alustaa puun
+# Käyttää vals-listan ensimmäistä arvoa puun juurena
+def init_tree(vals):
+    root = Node(vals[0])
     for val in vals:
         root = insert(root, val)
-    inorder(root)
-    print(search(root, 1))
+    return root
 
+
+# Nopea ja helppo tapa välttää tehokkuuden kannalta huonoin tilanne
+# Käyttää puun juurena listan mediaania
+def init_quick_balance(vals):
+    vals.sort()
+    root_val = vals[len(vals) // 2]
+    root = Node(root_val)
+    vals.shuffle()
+    for val in vals:
+        root = insert(root, val)
+    return root
+
+#def init_avl(vals):
+
+
+
+def main():
+    vals = [14, 7, 5, 3, 17, 12, 9, 10, 23, 1, 11]
+    root = init_tree(vals)
 
 main()
