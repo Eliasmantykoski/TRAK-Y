@@ -1,17 +1,22 @@
 import sys
 from node import Node
 
-class AVLtree(object):
+class AVLTree(object):
 
-    def insert(self, root, key):
+    # Function to insert a node
+    def insert_node(self, root, key):
+
+        # Find the correct location and insert the node
         if not root:
             return Node(key)
         elif key < root.key:
-            root.left = self.insert(root.left, key)
+            root.left = self.insert_node(root.left, key)
         else:
-            root.right = self.insert(root.right, key)
+            root.right = self.insert_node(root.right, key)
+
         root.height = 1 + max(self.getHeight(root.left),
                               self.getHeight(root.right))
+
         # Update the balance factor and balance the tree
         balanceFactor = self.getBalance(root)
         if balanceFactor > 1:
@@ -30,6 +35,7 @@ class AVLtree(object):
 
         return root
 
+    # Function to delete a node
     def delete_node(self, root, key):
 
         # Find the node to be deleted and remove it
@@ -76,6 +82,7 @@ class AVLtree(object):
                 return self.leftRotate(root)
         return root
 
+    # Function to perform left rotation
     def leftRotate(self, z):
         y = z.right
         T2 = y.left
@@ -99,17 +106,17 @@ class AVLtree(object):
                            self.getHeight(y.right))
         return y
 
+    # Get the height of the node
     def getHeight(self, root):
         if not root:
             return 0
-        else:
-            return root.height
+        return root.height
 
+    # Get balance factore of the node
     def getBalance(self, root):
         if not root:
             return 0
-        else:
-            return self.getHeight(root.left) - self.getHeight(root.right)
+        return self.getHeight(root.left) - self.getHeight(root.right)
 
     def getMinValueNode(self, root):
         if root is None or root.left is None:
@@ -119,10 +126,11 @@ class AVLtree(object):
     def preOrder(self, root):
         if not root:
             return
-        print("{0}".format(root.key), end=" ")
+        print("{0} ".format(root.key), end="")
         self.preOrder(root.left)
         self.preOrder(root.right)
 
+    # Print the tree
     def printHelper(self, currPtr, indent, last):
         if currPtr != None:
             sys.stdout.write(indent)
@@ -135,3 +143,11 @@ class AVLtree(object):
             print(currPtr.key)
             self.printHelper(currPtr.left, indent, False)
             self.printHelper(currPtr.right, indent, True)
+
+    def search(self, root, key):
+        if root is None or root.key == key:
+            return root
+        if root.key < key:
+            return self.search(root.right, key)
+        else:
+            return self.search(root.left, key)
