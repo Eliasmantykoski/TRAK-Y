@@ -1,5 +1,5 @@
 from node import Node
-
+from avl import AVLtree
 
 """Etsii ja palauttaa puusta noden jonka arvo on key
 Jos tällaista nodea ei löydy, palauttaa None
@@ -66,8 +66,12 @@ def init_quick_balance(vals):
 
 
 def main():
-    vals = [14, 7, 5, 3, 17, 12, 9, 10, 23, 1, 11]
-    root = init_tree(vals)
+    vals = [33, 13, 52, 9, 21, 61, 8, 11]
+    tree = AVLtree()
+    root = None
+    for val in vals:
+        root = tree.insert(root, val)
+    tree.printHelper(root, "", True)
 
 
 main()
