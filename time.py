@@ -22,32 +22,40 @@ for val in numberlist:
     '''
 
     test_code_basic = '''
-num1 = tree.search(root_basic, numberlist[0]).key
-num2 = tree.search(root_basic, numberlist[100]).key
-num3 = tree.search(root_basic, numberlist[9999]).key
+import random
+tree.search(root_basic, numberlist[random.randint(0, 9999)])
     '''
 
     test_code_quick_bal = '''
-num1 = tree_quick_bal.search(root_quick_bal, numberlist[0]).key
-num2 = tree_quick_bal.search(root_quick_bal, numberlist[100]).key
-num3 = tree_quick_bal.search(root_quick_bal, numberlist[9999]).key
+tree_quick_bal.search(root_quick_bal, numberlist[random.randint(0, 9999)])
     '''
 
     test_code_avl = '''
-num1 = tree_avl.search(root_avl, numberlist[0]).key
-num2 = tree_avl.search(root_avl, numberlist[100]).key
-num3 = tree_avl.search(root_avl, numberlist[9999]).key 
+tree_avl.search(root_avl, numberlist[random.randint(0, 9999)])
     '''
+    basic_times = []
+    quick_times = []
+    avl_times = []
+    for i in range(10):
+        time = timeit.timeit(setup=setup_code, stmt=test_code_basic, number=10000)
+        print("Search time with basic tree: {}".format(time))
+        basic_times.append(time)
 
-    time = timeit.timeit(setup=setup_code, stmt=test_code_basic, number=10000)
-    print("Search time with basic tree: {}".format(time))
+        time = timeit.timeit(setup=setup_code, stmt=test_code_quick_bal, number=10000)
+        print("Search time with quicly balanced tree: {}".format(time))
+        quick_times.append(time)
 
-    time = timeit.timeit(setup=setup_code, stmt=test_code_quick_bal, number=10000)
-    print("Search time with quicly balanced tree: {}".format(time))
-
-    time = timeit.timeit(setup=setup_code, stmt=test_code_avl, number=10000)
-    print("Search time with avl tree: {}".format(time))
+        time = timeit.timeit(setup=setup_code, stmt=test_code_avl, number=10000)
+        print("Search time with avl tree: {}\n".format(time))
+        avl_times.append(time)
+    basic_avg = sum(basic_times) / len(basic_times)
+    quick_avg = sum(quick_times) / len(quick_times)
+    avl_avg = sum(avl_times) / len(avl_times)
+    return [basic_avg, quick_avg, avl_avg]
 
 
 if __name__ == "__main__":
-    time()
+    avgs = time()
+    print("Average search time with basic tree: {}".format(avgs[0]))
+    print("Average search time with quicly balanced tree: {}".format(avgs[1]))
+    print("Average search time with avl tree: {}".format(avgs[2]))
