@@ -64,7 +64,7 @@ class Tree:
         return root
 
 
-    # Tulostaa puun arvot järjestyksessä
+    # Tulostaa puun arvot sisäjärjestyksessä
     # Tulostettavat arvot jäävät fuktion kutsupinoon kunnes on niiden vuoro
     def inorder(self, root):
         if root:

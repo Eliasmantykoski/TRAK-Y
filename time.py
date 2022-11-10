@@ -1,5 +1,9 @@
 import timeit
 
+# Testaa haun nopeutta erilaisissa binääripuissa
+# Setup koodi alustaa puun jossa on 10 000 satunnaista arvoa (jokaisessa puussa samat)
+# testikoodissa jokaisesta puusta haetaan satunnaista arvoa
+# haku suoritetaan 100 kertaa jokaisesta puusta ja lopussa tulostetaan niiden keskiarvo
 
 def time():
     setup_code = '''
@@ -36,17 +40,17 @@ tree_avl.search(root_avl, numberlist[random.randint(0, 9999)])
     basic_times = []
     quick_times = []
     avl_times = []
-    for i in range(10):
+    for i in range(100):
         time = timeit.timeit(setup=setup_code, stmt=test_code_basic, number=10000)
-        print("Search time with basic tree: {}".format(time))
+        #print("Search time with basic tree: {}".format(time))
         basic_times.append(time)
 
         time = timeit.timeit(setup=setup_code, stmt=test_code_quick_bal, number=10000)
-        print("Search time with quicly balanced tree: {}".format(time))
+        #print("Search time with quicly balanced tree: {}".format(time))
         quick_times.append(time)
 
         time = timeit.timeit(setup=setup_code, stmt=test_code_avl, number=10000)
-        print("Search time with avl tree: {}\n".format(time))
+        #print("Search time with avl tree: {}\n".format(time))
         avl_times.append(time)
     basic_avg = sum(basic_times) / len(basic_times)
     quick_avg = sum(quick_times) / len(quick_times)
